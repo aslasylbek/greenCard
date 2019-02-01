@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">greencard</string>
+    <string name="uib_student">Студент UIB</string>
+    <string name="fast_verification">Быстрая авторизация</string>
+
+    <string name="loading">Загрузка</string>
+
+</resources>

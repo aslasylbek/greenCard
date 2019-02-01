@@ -1,0 +1,81 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center"
+    android:orientation="vertical"
+    tools:context=".ui.login.LoginActivity">
+
+
+        <LinearLayout
+            android:id="@+id/email_login_form"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_margin="20dp"
+            android:orientation="vertical">
+
+
+            <android.support.design.widget.TextInputLayout
+                android:id="@+id/emailLayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <AutoCompleteTextView
+                    android:id="@+id/email"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Телефон"
+                    android:cursorVisible="true"
+                    android:gravity="center|start"
+                    android:maxLength="16"
+                    android:digits="1234567890+-()"
+                    android:inputType="phone|textAutoComplete"
+                    android:paddingBottom="10dp"
+                    android:maxLines="1"
+                    android:singleLine="true" />
+
+            </android.support.design.widget.TextInputLayout>
+
+            <android.support.design.widget.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <EditText
+                    android:id="@+id/password"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Пароль"
+                    android:imeActionId="6"
+                    android:imeActionLabel="Enter"
+                    android:imeOptions="actionUnspecified"
+                    android:cursorVisible="true"
+                    android:inputType="textPassword"
+                    android:maxLines="1"
+                    android:singleLine="true" />
+
+            </android.support.design.widget.TextInputLayout>
+
+
+            <Switch
+                android:id="@+id/isStudent"
+                android:layout_width="match_parent"
+                android:checked="false"
+                android:layout_height="wrap_content"
+                android:text="@string/uib_student" />
+
+            <Button
+                android:id="@+id/email_sign_in_button"
+                android:background="@drawable/btn_login"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:text="Вход"
+                android:textColor="@color/whiteColor"
+                android:textStyle="bold" />
+
+        </LinearLayout>
+
+
+</LinearLayout>
