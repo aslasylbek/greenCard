@@ -9,6 +9,7 @@ import kz.uib.greencard.MvpApp;
 import kz.uib.greencard.R;
 import kz.uib.greencard.base.BaseActivity;
 import kz.uib.greencard.repository.DataManager;
+import kz.uib.greencard.ui.easycode.EasyCodeActivity;
 import kz.uib.greencard.ui.login.LoginActivity;
 
 
@@ -36,9 +37,9 @@ public class SplashActivity extends BaseActivity implements SplashMvpView {
     }
 
     @Override
-    public void openMainActivity() {
-        /*Intent intent = Main2Activity.getStartIntent(this);
-        startActivity(intent);*/
+    public void openEasyCodeActivity() {
+        Intent intent = EasyCodeActivity.getStartIntent(this);
+        startActivity(intent);
         finish();
     }
 

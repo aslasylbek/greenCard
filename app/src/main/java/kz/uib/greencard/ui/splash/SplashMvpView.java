@@ -9,6 +9,6 @@ import kz.uib.greencard.base.MvpView;
 
 public interface SplashMvpView extends MvpView {
 
-    void openMainActivity();
+    void openEasyCodeActivity();
     void openLoginActivity();
 }

@@ -30,23 +30,23 @@ public class SharedPrefsHelper implements PreferenceHelper{
     }
 
     @Override
-    public void putToken(String password){
-        mSharedPreferences.edit().putString(TOKEN, password).apply();
+    public void putCode(String code){
+        mSharedPreferences.edit().putString(TOKEN, code).apply();
     }
 
     @Override
-    public String getPrefToken(){
+    public String getPrefCode(){
         return mSharedPreferences.getString(TOKEN, null);
     }
 
     @Override
-    public void putUserId(String user_id){
-        mSharedPreferences.edit().putString(USER_ID, user_id).apply();
+    public void putUserId(int user_id){
+        mSharedPreferences.edit().putInt(USER_ID, user_id).apply();
     }
 
     @Override
-    public String getPrefUserid(){
-        return mSharedPreferences.getString(USER_ID, null);
+    public int getPrefUserid(){
+        return mSharedPreferences.getInt(USER_ID, 0);
     }
 
 
@@ -71,42 +71,32 @@ public class SharedPrefsHelper implements PreferenceHelper{
     }
 
     @Override
-    public void putCourseId(String course_id) {
-        mSharedPreferences.edit().putString(COURSE_ID, course_id).apply();
+    public void putSessionId(String session_id) {
+        mSharedPreferences.edit().putString(SESSION, session_id).apply();
     }
 
     @Override
-    public String getCourseId() {
-        return mSharedPreferences.getString(COURSE_ID, null);
+    public String getSessionId() {
+        return mSharedPreferences.getString(SESSION, null);
     }
 
     @Override
-    public void putName(String name) {
-        mSharedPreferences.edit().putString(NAME, name).apply();
+    public void setOnaiPanEntered(boolean onai_pan) {
+        mSharedPreferences.edit().putBoolean(ONAI, onai_pan).apply();
     }
 
     @Override
-    public String getName() {
-        return mSharedPreferences.getString(NAME, null);
+    public boolean isOnaiPanEntered() {
+        return mSharedPreferences.getBoolean(ONAI, false);
     }
 
     @Override
-    public void putGroup(String group) {
-        mSharedPreferences.edit().putString(GROUP, group).apply();
+    public void setStudent(boolean isStudent) {
+        mSharedPreferences.edit().putBoolean(IS_STUDENT, isStudent).apply();
     }
 
     @Override
-    public String getGroup() {
-        return mSharedPreferences.getString(GROUP, null);
-    }
-
-    @Override
-    public void putProgram(String program) {
-        mSharedPreferences.edit().putString(PROGRAM, program).apply();
-    }
-
-    @Override
-    public String getProgram() {
-        return mSharedPreferences.getString(PROGRAM, null);
+    public boolean isStudent() {
+        return mSharedPreferences.getBoolean(IS_STUDENT, false);
     }
 }

@@ -2,28 +2,25 @@ package kz.uib.greencard.ui.login;
 
 public class User {
 
-    private String barcode;
+    private String barcodeOrPhone;
     private String password;
-    private boolean saveBarcode;
-    private boolean savePassword;
+    private boolean isStudent;
 
-    public User(String barcode, String password, boolean saveBarcode, boolean savePassword) {
-
-        this.barcode = barcode;
+    public User(String barcodeOrPhone, String password, boolean isStudent) {
+        this.barcodeOrPhone = barcodeOrPhone;
         this.password = password;
-        this.saveBarcode = saveBarcode;
-        this.savePassword = savePassword;
+        this.isStudent = isStudent;
     }
 
     public User() {
     }
 
-    public String getBarcode() {
-        return barcode;
+    public String getBarcodeOrPhone() {
+        return barcodeOrPhone;
     }
 
-    public void setBarcode(String barcode) {
-        this.barcode = barcode;
+    public void setBarcodeOrPhone(String barcodeOrPhone) {
+        this.barcodeOrPhone = barcodeOrPhone;
     }
 
     public String getPassword() {
@@ -34,19 +31,11 @@ public class User {
         this.password = password;
     }
 
-    public boolean isSaveBarcode() {
-        return saveBarcode;
+    public boolean isStudent() {
+        return isStudent;
     }
 
-    public void setSaveBarcode(boolean saveBarcode) {
-        this.saveBarcode = saveBarcode;
-    }
-
-    public boolean isSavePassword() {
-        return savePassword;
-    }
-
-    public void setSavePassword(boolean savePassword) {
-        this.savePassword = savePassword;
+    public void setStudent(boolean student) {
+        isStudent = student;
     }
 }

@@ -22,6 +22,7 @@ public class MvpApp extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
+        sharedPrefsHelper = new SharedPrefsHelper(this);
         dataManager = new DataManager(sharedPrefsHelper);
         ApiFactory.recreate();
         ViewPump.init(ViewPump.builder()

@@ -19,13 +19,13 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".ui.MenuActivity">
-
-        </activity>
-
-        <activity android:name=".ui.login.LoginActivity"
-            android:windowSoftInputMode="adjustResize">
-        </activity>
+        <activity
+            android:name=".ui.menu.MenuActivity"
+            android:theme="@style/AppTheme.NoActionBar"
+            android:windowSoftInputMode="adjustNothing" />
+        <activity
+            android:name=".ui.login.LoginActivity"
+            android:windowSoftInputMode="adjustResize" />
         <activity android:name=".ui.splash.SplashActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -33,6 +33,17 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity
+            android:name=".ui.code.CodeActivity"
+            android:label="@string/title_activity_code"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".ui.easycode.EasyCodeActivity"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".ui.bills.BillActivity"
+            android:label="@string/title_activity_bill"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>
 
 </manifest>

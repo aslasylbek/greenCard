@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    app:layout_behavior="@string/appbar_scrolling_view_behavior"
+    tools:context=".ui.code.CodeActivity"
+    tools:showIn="@layout/activity_code">
+
+
+    <in.arjsna.passcodeview.PassCodeView
+        android:id="@+id/pass_code_view"
+        android:layout_width="0dp"
+        android:layout_height="373dp"
+        android:layout_marginBottom="8dp"
+        android:padding="25.0dp"
+        app:digit_size="30.0dp"
+        app:digits="4"
+        app:empty_drawable="@drawable/empty_dot"
+        app:filled_drawable="@drawable/filled_dot"
+        app:key_text_size="30.0sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <TextView
+        android:id="@+id/codeText"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:textSize="17sp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginBottom="8dp"
+        android:text="Создайте код-пароль"
+        app:layout_constraintBottom_toTopOf="@+id/pass_code_view"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.966" />
+
+</android.support.constraint.ConstraintLayout>

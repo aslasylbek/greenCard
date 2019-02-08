@@ -23,6 +23,7 @@ import kz.uib.greencard.MvpApp;
 import kz.uib.greencard.R;
 import kz.uib.greencard.base.BaseActivity;
 import kz.uib.greencard.repository.DataManager;
+import kz.uib.greencard.ui.code.CodeActivity;
 
 /**
  * A login screen that offers login via email/password.
@@ -55,9 +56,7 @@ public class LoginActivity extends BaseActivity implements LoginMvpView  {
         DataManager dataManager = ((MvpApp)getApplication()).getDataManager();
         loginPresenter = new LoginPresenter(dataManager);
         loginPresenter.attachView(LoginActivity.this);
-        loginPresenter.setPrefsIfExist();
-
-
+        editTextEmail.setSelection(editTextEmail.getText().length());
     }
 
 
@@ -72,10 +71,14 @@ public class LoginActivity extends BaseActivity implements LoginMvpView  {
 
     @OnCheckedChanged(R.id.isStudent)
     public void onCheckChange(boolean isStudent){
-        if(isStudent)
+        if(isStudent) {
             emailInputLayout.setHint("Баркод");
+            editTextEmail.setText("");
+        }
         else{
             emailInputLayout.setHint("Телефон");
+            editTextEmail.setText("+7");
+            editTextEmail.setSelection(editTextEmail.getText().length());
         }
     }
 
@@ -86,9 +89,9 @@ public class LoginActivity extends BaseActivity implements LoginMvpView  {
 
     @Override
     public void openMainActivity() {
-        /*Intent intent = Main2Activity.getStartIntent(this);
+        Intent intent = CodeActivity.getStartIntent(this);
         startActivity(intent);
-        finish();*/
+        finish();
 
     }
 
@@ -100,9 +103,9 @@ public class LoginActivity extends BaseActivity implements LoginMvpView  {
 
     @Override
     public User getUser() {
-        String barcodeId = editTextEmail.getText().toString();
+        String barcodeOrPhone = editTextEmail.getText().toString();
         String passwordId = editTextPassword.getText().toString();
-        return new User(barcodeId, passwordId , false, false);
+        return new User(barcodeOrPhone, passwordId , isStudent.isChecked());
     }
 
     @Override
@@ -112,8 +115,8 @@ public class LoginActivity extends BaseActivity implements LoginMvpView  {
 
     @Override
     public void wrongLoginOrPassword() {
-        /*editTextEmail.setError(getString(R.string.error_invalid_email));
-        editTextPassword.setError(getString(R.string.error_incorrect_password));*/
+        editTextEmail.setText("");
+        editTextPassword.setText("");
     }
 
     @Override
