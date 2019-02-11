@@ -6,10 +6,12 @@ import kz.uib.greencard.base.MvpView;
 public interface MenuMvpContract {
 
     interface MenuMvpView extends MvpView{
+        void attachMainFragment();
 
     }
 
     interface MenuMvpPresenter<V extends MenuMvpView> extends MvpPresenter<V>{
+        void initActivity();
 
     }
 }

@@ -13,6 +13,7 @@ public interface MainMvpContract {
     interface MainMvpView extends MvpView{
         void updateCategoriesUI(List<Category> categories);
         void updateCombosUI(List<Combo> combos);
+        void updateEmptyUI();
         void openSplashActivity();
     }
 

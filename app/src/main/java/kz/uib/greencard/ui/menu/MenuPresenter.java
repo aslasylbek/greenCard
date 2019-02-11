@@ -8,4 +8,10 @@ public class MenuPresenter<V extends MenuMvpContract.MenuMvpView> extends BasePr
     public MenuPresenter(DataManager mDataManager) {
         super(mDataManager);
     }
+
+    @Override
+    public void initActivity() {
+        getMvpView().attachMainFragment();
+
+    }
 }

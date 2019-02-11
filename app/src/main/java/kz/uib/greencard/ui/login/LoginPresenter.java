@@ -63,6 +63,7 @@ public class LoginPresenter<V extends LoginMvpView> extends BasePresenter<V> imp
 
                     @Override
                     public void onError(Throwable t) {
+                        getMvpView().showSnackbar("Произошла ошибка");
                         getMvpView().hideLoading();
                     }
                 });
@@ -94,7 +95,9 @@ public class LoginPresenter<V extends LoginMvpView> extends BasePresenter<V> imp
 
                     @Override
                     public void onError(Throwable t) {
+                        getMvpView().showSnackbar("Произошла ошибка");
                         getMvpView().hideLoading();
+
                     }
                 });
             }

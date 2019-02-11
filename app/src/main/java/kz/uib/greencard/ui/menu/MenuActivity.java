@@ -11,12 +11,15 @@ import android.util.Log;
 import android.view.MenuItem;
 import android.widget.FrameLayout;
 
+import com.squareup.haha.perflib.Main;
+
 import butterknife.BindView;
 import kz.uib.greencard.MvpApp;
 import kz.uib.greencard.R;
 import kz.uib.greencard.base.BaseActivity;
 import kz.uib.greencard.repository.DataManager;
 import kz.uib.greencard.ui.history.HistoryFragment;
+import kz.uib.greencard.ui.main.MainFragment;
 import kz.uib.greencard.ui.profile.ProfileFragment;
 
 public class MenuActivity extends BaseActivity implements MenuMvpContract.MenuMvpView {
@@ -43,7 +46,7 @@ public class MenuActivity extends BaseActivity implements MenuMvpContract.MenuMv
             FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
             switch (item.getItemId()) {
                 case R.id.app_home:
-                    Log.e(TAG, "onNavigationItemSelected: " );
+                    fragmentTransaction.replace(R.id.menuFrame, MainFragment.newInstance()).commit();
                     return true;
                 case R.id.app_qr:
                     Log.e(TAG, "onNavigationItemSelected: " );
@@ -62,10 +65,16 @@ public class MenuActivity extends BaseActivity implements MenuMvpContract.MenuMv
     @Override
     protected void init(@Nullable Bundle state) {
         mNavigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
-
         DataManager manager = ((MvpApp)getApplicationContext()).getDataManager();
         presenter = new MenuPresenter(manager);
         presenter.attachView(this);
+        presenter.initActivity();
+    }
+
+    @Override
+    public void attachMainFragment() {
+        FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
+        fragmentTransaction.replace(R.id.menuFrame, MainFragment.newInstance()).commit();
     }
 
     @Override

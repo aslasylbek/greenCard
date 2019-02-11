@@ -24,11 +24,14 @@ public class MainPresenter<V extends MainMvpContract.MainMvpView> extends BasePr
                     getMvpView().showSnackbar(response.getMessage());
                 }
                 else {
-                    if(!response.getCategories().isEmpty()){
+                    if(response.getCategories()!=null && !response.getCategories().isEmpty()){
                         getMvpView().updateCategoriesUI(response.getCategories());
                     }
-                    if(!response.getCombo().isEmpty())
+                    if(response.getCombo()!=null && !response.getCombo().isEmpty())
                         getMvpView().updateCombosUI(response.getCombo());
+                    else {
+                        getMvpView().updateEmptyUI();
+                    }
                 }
                 getMvpView().hideLoading();
             }

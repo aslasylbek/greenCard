@@ -38,8 +38,8 @@ public class CodeActivity extends BaseActivity implements CodeMvpContract.CodeMv
 
     @Override
     protected void init(@Nullable Bundle state) {
-        setSupportActionBar(mToolbar);
         mToolbar.setTitle("");
+        setSupportActionBar(mToolbar);
         passCodeView.setOnTextChangeListener(this);
         DataManager manager = ((MvpApp)getApplicationContext()).getDataManager();
         presenter = new CodePresenter(manager);
