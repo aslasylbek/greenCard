@@ -15,5 +15,7 @@ public interface MvpView extends LoadingView {
 
     void showSnackbar(String message);
 
+    //void openSplashActivity();
+
 
 }

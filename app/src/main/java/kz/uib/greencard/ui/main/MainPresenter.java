@@ -18,22 +18,24 @@ public class MainPresenter<V extends MainMvpContract.MainMvpView> extends BasePr
         getDataManager().getCategoryList(new DataManager.GetCategoryListCallBack() {
             @Override
             public void onSuccess(CategoriesResponse response) {
-                if (response.getSuccess()==0){
-                    if (response.getError_code()==1)
+                if (response.getSuccess() == 0) {
+                    if (response.getError_code() == 1)
                         getMvpView().openSplashActivity();
                     getMvpView().showSnackbar(response.getMessage());
-                }
-                else {
-                    if(response.getCategories()!=null && !response.getCategories().isEmpty()){
-                        getMvpView().updateCategoriesUI(response.getCategories());
+                } else {
+                    if (response.getCategories() != null && !response.getCategories().isEmpty()) {
+                        if (isAttached())
+                            getMvpView().updateCategoriesUI(response.getCategories());
                     }
-                    if(response.getCombo()!=null && !response.getCombo().isEmpty())
-                        getMvpView().updateCombosUI(response.getCombo());
-                    else {
+                    if (response.getCombo() != null && !response.getCombo().isEmpty()) {
+                        if (isAttached())
+                            getMvpView().updateCombosUI(response.getCombo());
+                    } else {
                         getMvpView().updateEmptyUI();
                     }
                 }
-                getMvpView().hideLoading();
+                if (isAttached())
+                    getMvpView().hideLoading();
             }
 
             @Override

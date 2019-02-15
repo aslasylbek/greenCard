@@ -14,6 +14,7 @@ public interface MainMvpContract {
         void updateCategoriesUI(List<Category> categories);
         void updateCombosUI(List<Combo> combos);
         void updateEmptyUI();
+        void setEmptyRView();
         void openSplashActivity();
     }
 

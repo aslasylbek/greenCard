@@ -43,31 +43,32 @@ public class HistoryPresenter<V extends HistoryMvpContract.HistoryMvpView> exten
     @Override
     public void getRecentHistory() {
 
-        if(isAttached())
+        if(isAttached()) {
             getMvpView().showLoading();
-        getDataManager().getRecentHistory(new DataManager.GetHistoryCallBack() {
-            @Override
-            public void onSuccess(HistoryResponse response) {
-                if(response.getSuccess()==0){
-                    if(response.getError_code()==1){
-                        getMvpView().openSplashActivity();
+            getDataManager().getRecentHistory(new DataManager.GetHistoryCallBack() {
+                @Override
+                public void onSuccess(HistoryResponse response) {
+                    if (response.getSuccess() == 0) {
+                        if (response.getError_code() == 1) {
+                            getMvpView().openSplashActivity();
+                        }
+                        getMvpView().showSnackbar(response.getMessage());
+                    } else {
+                        if (isAttached())
+                        getMvpView().updateUI(response.getMonthes());
                     }
-                    getMvpView().showSnackbar(response.getMessage());
-                }
-                else {
-                    getMvpView().updateUI(response.getMonthes());
+
+                    if (isAttached())
+                        getMvpView().hideLoading();
                 }
 
-                if (isAttached())
-                    getMvpView().hideLoading();
-            }
-
-            @Override
-            public void onError(String msg) {
-                if (isAttached())
-                    getMvpView().hideLoading();
-            }
-        });
+                @Override
+                public void onError(String msg) {
+                    if (isAttached())
+                        getMvpView().hideLoading();
+                }
+            });
+        }
 
     }
 }

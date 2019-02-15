@@ -8,17 +8,13 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.Toolbar;
-import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.squareup.picasso.Picasso;
-
-import org.w3c.dom.Text;
 
 import java.util.ArrayList;
 
@@ -31,7 +27,6 @@ import kz.uib.greencard.base.DividerItemDecoration;
 import kz.uib.greencard.base.EmptyRecyclerView;
 import kz.uib.greencard.repository.DataManager;
 import kz.uib.greencard.repository.model.ComboResponse;
-import kz.uib.greencard.ui.history.HistoryFragment;
 import kz.uib.greencard.ui.splash.SplashActivity;
 
 /**
@@ -42,7 +37,7 @@ public class BillComboFragment extends BaseFragment implements BillComboMvpContr
     private static final String COMBO_ID = "combo_id";
     private BillComboPresenter presenter;
     private String billId;
-    private ComboAdapter adapter;
+    private BillComboAdapter adapter;
 
     @BindView(R.id.comboRecyclerView)
     EmptyRecyclerView mRecyclerView;
@@ -89,7 +84,7 @@ public class BillComboFragment extends BaseFragment implements BillComboMvpContr
         }
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getBaseActivity()));
         mRecyclerView.addItemDecoration(new DividerItemDecoration(getBaseActivity()));
-        adapter = new ComboAdapter(new ArrayList(), getBaseActivity());
+        adapter = new BillComboAdapter(new ArrayList(), getBaseActivity());
         adapter.attachToRecyclerView(mRecyclerView);
         adapter.setOnItemClickListener(this);
         DataManager manager = ((MvpApp)getBaseActivity().getApplicationContext()).getDataManager();

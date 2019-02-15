@@ -5,24 +5,27 @@ import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.BottomNavigationView;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
 import android.widget.FrameLayout;
 
-import com.squareup.haha.perflib.Main;
-
 import butterknife.BindView;
 import kz.uib.greencard.MvpApp;
 import kz.uib.greencard.R;
 import kz.uib.greencard.base.BaseActivity;
 import kz.uib.greencard.repository.DataManager;
+import kz.uib.greencard.ui.OnFragmentInteractionListener;
+import kz.uib.greencard.ui.combo.ComboFragment;
 import kz.uib.greencard.ui.history.HistoryFragment;
 import kz.uib.greencard.ui.main.MainFragment;
 import kz.uib.greencard.ui.profile.ProfileFragment;
+import kz.uib.greencard.ui.qr.QRFragment;
 
-public class MenuActivity extends BaseActivity implements MenuMvpContract.MenuMvpView {
+public class MenuActivity extends BaseActivity implements MenuMvpContract.MenuMvpView, OnFragmentInteractionListener {
 
     private static final String TAG = "MenuActivity";
     @BindView(R.id.navigation)
@@ -49,7 +52,7 @@ public class MenuActivity extends BaseActivity implements MenuMvpContract.MenuMv
                     fragmentTransaction.replace(R.id.menuFrame, MainFragment.newInstance()).commit();
                     return true;
                 case R.id.app_qr:
-                    Log.e(TAG, "onNavigationItemSelected: " );
+                    fragmentTransaction.replace(R.id.menuFrame, QRFragment.newInstance()).commit();
                     return true;
                 case R.id.app_history:
                     fragmentTransaction.replace(R.id.menuFrame, HistoryFragment.newInstance()).commit();
@@ -63,7 +66,16 @@ public class MenuActivity extends BaseActivity implements MenuMvpContract.MenuMv
     };
 
     @Override
+    public void onFragmentInteraction(String id) {
+        FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
+        fragmentTransaction.replace(R.id.menuFrame, ComboFragment.newInstance(id));
+        fragmentTransaction.addToBackStack(null);
+        fragmentTransaction.commit();
+    }
+
+    @Override
     protected void init(@Nullable Bundle state) {
+
         mNavigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
         DataManager manager = ((MvpApp)getApplicationContext()).getDataManager();
         presenter = new MenuPresenter(manager);
@@ -76,6 +88,19 @@ public class MenuActivity extends BaseActivity implements MenuMvpContract.MenuMv
         FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
         fragmentTransaction.replace(R.id.menuFrame, MainFragment.newInstance()).commit();
     }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if(item.getItemId()==android.R.id.home){
+            onBackPressed();
+            return true;
+        }
+
+        return super.onOptionsItemSelected(item);
+    }
+
+
+
 
     @Override
     protected int getContentResource() {

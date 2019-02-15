@@ -11,6 +11,9 @@ public class CompanyResponse {
     @SerializedName("name")
     @Expose
     private String name;
+    @SerializedName("message")
+    @Expose
+    private String message;
     @SerializedName("description")
     @Expose
     private String description;
@@ -92,5 +95,13 @@ public class CompanyResponse {
 
     public void setIconUrl(String iconUrl) {
         this.iconUrl = iconUrl;
+    }
+
+    public String getMessage() {
+        return message;
+    }
+
+    public void setMessage(String message) {
+        this.message = message;
     }
 }

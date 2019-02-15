@@ -71,12 +71,14 @@ public class EasyCodeActivity extends BaseActivity implements EasyCodeMvpContrac
     public void openSplashActivity() {
         Intent intent = SplashActivity.getStartIntent(this);
         startActivity(intent);
+        finish();
     }
 
     @Override
     public void openMenuActivity() {
         Intent intent = MenuActivity.getMenuIntent(this);
         startActivity(intent);
+        finish();
     }
 
     @Override

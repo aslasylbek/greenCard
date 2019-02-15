@@ -7,7 +7,6 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -21,10 +20,10 @@ import kz.uib.greencard.R;
 import kz.uib.greencard.base.BaseAdapter;
 import kz.uib.greencard.repository.model.Item;
 
-public class ComboAdapter extends BaseAdapter<ComboAdapter.ComboViewHolder, Item> {
+public class BillComboAdapter extends BaseAdapter<BillComboAdapter.ComboViewHolder, Item> {
 
     private Context mContext;
-    public ComboAdapter(@NonNull List<Item> items, Context context) {
+    public BillComboAdapter(@NonNull List<Item> items, Context context) {
         super(items);
         mContext = context;
     }
@@ -67,13 +66,16 @@ public class ComboAdapter extends BaseAdapter<ComboAdapter.ComboViewHolder, Item
         public void bind(@NonNull Item repository) {
             mTitle.setText(repository.getProviderName());
             mDesc.setText(repository.getName());
-            if(repository.getConfirmed().equals("1")){
-                mAccess.setText("Использовано");
-                mAccess.setTextColor(mContext.getResources().getColor(R.color.redColor));
-            }
-            else {
-                mAccess.setText("Доступно");
-                mAccess.setTextColor(mContext.getResources().getColor(R.color.colorPrimary));
+            if(repository.getConfirmed()!=null) {
+                if (repository.getConfirmed().equals("1")) {
+                    mAccess.setText("Использовано");
+                    //mAccess.setTextColor(mContext.getResources().getColor(R.color.redColor));
+                    mAccess.setTextColor(Color.RED);
+                } else {
+                    mAccess.setText("Доступно");
+                    mAccess.setTextColor(Color.GREEN);
+                    //mAccess.setTextColor(mContext.getResources().getColor(R.color.colorPrimary));
+                }
             }
             Picasso.with(mContext)
                     .load(repository.getPhoto())

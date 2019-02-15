@@ -1,6 +1,7 @@
 package kz.uib.greencard.base;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.LayoutRes;
 import android.support.annotation.Nullable;
@@ -18,6 +19,7 @@ import io.github.inflationx.viewpump.ViewPumpContextWrapper;
 import kz.uib.greencard.R;
 import kz.uib.greencard.base.general.LoadingDialog;
 import kz.uib.greencard.base.general.LoadingView;
+import kz.uib.greencard.ui.splash.SplashActivity;
 
 /**
  * Created by aslan on 17.05.2018.
@@ -84,6 +86,13 @@ public abstract class BaseActivity extends AppCompatActivity implements MvpView,
         textView.setTextColor(ContextCompat.getColor(this, R.color.whiteColor));
         snackbar.show();
     }
+
+   /* @Override
+    public void openSplashActivity() {
+        Intent intent = SplashActivity.getStartIntent(this);
+        startActivity(intent);
+        finish();
+    }*/
 
     @Override
     public void onFragmentAttached(){

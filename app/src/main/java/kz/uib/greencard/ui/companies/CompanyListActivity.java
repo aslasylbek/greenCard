@@ -20,12 +20,15 @@ import kz.uib.greencard.base.DividerItemDecoration;
 import kz.uib.greencard.base.EmptyRecyclerView;
 import kz.uib.greencard.repository.DataManager;
 import kz.uib.greencard.repository.model.Company;
+import kz.uib.greencard.ui.companies.company.CompanyActivity;
 import kz.uib.greencard.ui.splash.SplashActivity;
 
 public class CompanyListActivity extends BaseActivity implements CompanyListMvpContract.CompanyListMvpView , BaseAdapter.OnItemClickListener {
 
     private static final String CATEGORY_ID = "category_id";
     private static final String TITLE_CAT = "titleCat";
+    private static final String COMPANY_ID = "company_id";
+
 
     private CompanyListPresenter presenter;
     private CompanyAdapter adapter;
@@ -61,7 +64,9 @@ public class CompanyListActivity extends BaseActivity implements CompanyListMvpC
     @Override
     public void onItemClick(@NonNull Object item) {
         Company company = (Company)item;
-
+        Intent intent = CompanyActivity.getStartIntent(this);
+        intent.putExtra(COMPANY_ID, company.getId());
+        startActivity(intent);
     }
 
     @Override

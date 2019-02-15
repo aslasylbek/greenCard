@@ -6,28 +6,48 @@
     android:layout_height="match_parent"
     tools:context=".ui.main.MainFragment">
 
-    <com.tmall.ultraviewpager.UltraViewPager
-        android:id="@+id/ultra_viewpager"
+    <com.asksira.loopingviewpager.LoopingViewPager
+        android:id="@+id/viewpager"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_centerInParent="true"
-        android:layout_marginBottom="7dp"
-        android:background="@android:color/darker_gray"
+        android:layout_marginBottom="8dp"
+        android:background="@android:color/white"
+        app:autoScroll="true"
+        app:isInfinite="true"
         app:layout_constraintBottom_toTopOf="@+id/categoriesRecyclerView"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:scrollInterval="3000"
+        app:wrap_content="true" />
+
+    <com.rd.PageIndicatorView
+        android:id="@+id/indicator"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        app:layout_constraintBottom_toBottomOf="@id/viewpager"
+        app:layout_constraintLeft_toLeftOf="@id/viewpager"
+        app:layout_constraintRight_toRightOf="@id/viewpager"
+        app:piv_animationDuration="200"
+        app:piv_animationType="slide"
+        app:piv_interactiveAnimation="true" />
+
 
     <kz.uib.greencard.base.EmptyRecyclerView
         android:id="@+id/categoriesRecyclerView"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:layout_marginTop="8dp"
         android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
         android:layout_marginEnd="8dp"
         android:layout_marginBottom="8dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/ultra_viewpager" />
+        app:layout_constraintTop_toBottomOf="@id/viewpager" />
+
 </android.support.constraint.ConstraintLayout>

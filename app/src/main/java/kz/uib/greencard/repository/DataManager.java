@@ -19,6 +19,10 @@ import kz.uib.greencard.repository.model.HistoryResponse;
 import kz.uib.greencard.repository.model.LoginResponse;
 import kz.uib.greencard.repository.model.PostResponse;
 import kz.uib.greencard.repository.model.ProfileResponse;
+import kz.uib.greencard.repository.model.PurchaseComboResponse;
+import kz.uib.greencard.repository.model.QrConfirmResponse;
+import kz.uib.greencard.repository.model.QrDiscountResponse;
+import kz.uib.greencard.repository.model.QrResponse;
 import kz.uib.greencard.repository.remote.ApiFactory;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -311,6 +315,107 @@ public class DataManager  implements DataManagerContract{
                 });
     }
 
+    public void purchaseComboRemote(String comboId, String code, final GetComboPurchaseCallBack callBack ){
+        ApiFactory
+                .getApiService()
+                .purchaseCombo(getSessionId(), comboId, code)
+                .enqueue(new Callback<PurchaseComboResponse>() {
+                    @Override
+                    public void onResponse(Call<PurchaseComboResponse> call, Response<PurchaseComboResponse> response) {
+                        if (response.isSuccessful()){
+                            callBack.onSuccess(response.body());
+                        }
+                        else callBack.onError(response.message());
+                    }
+
+                    @Override
+                    public void onFailure(Call<PurchaseComboResponse> call, Throwable t) {
+                        callBack.onError(t.getMessage());
+                    }
+                });
+    }
+
+    public void getQrInformation(String qrCode, final GetQrInfoCallBack callBack){
+        ApiFactory
+                .getApiService()
+                .getQrInformation(getSessionId(), qrCode, "1")
+                .enqueue(new Callback<QrResponse>() {
+                    @Override
+                    public void onResponse(Call<QrResponse> call, Response<QrResponse> response) {
+                        if (response.isSuccessful()){
+                            callBack.onSuccess(response.body());
+                        }
+                        else {
+                            callBack.onError(response.message());
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(Call<QrResponse> call, Throwable t) {
+                        callBack.onError(t.getMessage());
+
+                    }
+                });
+    }
+
+    public void getDiscount(String qrCode, int amount, final GetQrDiscountCallBack callBack){
+        ApiFactory
+                .getApiService()
+                .getQrDiscount(getSessionId(), qrCode, "1", amount)
+                .enqueue(new Callback<QrDiscountResponse>() {
+                    @Override
+                    public void onResponse(Call<QrDiscountResponse> call, Response<QrDiscountResponse> response) {
+                        if (response.isSuccessful()){
+                            callBack.onSuccess(response.body());
+                        }
+                        else callBack.onError(response.message());
+                    }
+
+                    @Override
+                    public void onFailure(Call<QrDiscountResponse> call, Throwable t) {
+                        callBack.onError(t.getMessage());
+                    }
+                });
+    }
+
+    public void confirm_discount(String historyId, String xonlinecode, final GetConfirmCallBack callBack){
+        ApiFactory
+                .getApiService()
+                .confirmDiscount(getSessionId(), historyId, "1", xonlinecode)
+                .enqueue(new Callback<QrConfirmResponse>() {
+                    @Override
+                    public void onResponse(Call<QrConfirmResponse> call, Response<QrConfirmResponse> response) {
+                        if (response.isSuccessful())
+                            callBack.onSuccess(response.body());
+                        else callBack.onError(response.message());
+                    }
+
+                    @Override
+                    public void onFailure(Call<QrConfirmResponse> call, Throwable t) {
+                        callBack.onError(t.getMessage());
+                    }
+                });
+    }
+
+    public void confirmCombo(String optionId, final GetComboPurchaseCallBack callBack){
+        ApiFactory
+                .getApiService()
+                .confirmCombo(getSessionId(), optionId, "1")
+                .enqueue(new Callback<PurchaseComboResponse>() {
+                    @Override
+                    public void onResponse(Call<PurchaseComboResponse> call, Response<PurchaseComboResponse> response) {
+                        if (response.isSuccessful())
+                            callBack.onSuccess(response.body());
+                        else callBack.onError(response.message());
+                    }
+
+                    @Override
+                    public void onFailure(Call<PurchaseComboResponse> call, Throwable t) {
+                        callBack.onError(t.getMessage());
+                    }
+                });
+    }
+
     @Override
     public void clear() {
         prefsHelper.clear();
@@ -438,6 +543,24 @@ public class DataManager  implements DataManagerContract{
 
     public interface GetCategoryListCallBack{
         void onSuccess(CategoriesResponse response);
+        void onError(String msg);
+    }
+    public interface GetComboPurchaseCallBack{
+        void onSuccess(PurchaseComboResponse response);
+        void onError(String msg);
+    }
+    public interface GetQrInfoCallBack{
+        void onSuccess(QrResponse response);
+        void onError(String msg);
+    }
+
+    public interface GetQrDiscountCallBack{
+        void onSuccess(QrDiscountResponse response);
+        void onError(String msg);
+    }
+
+    public interface GetConfirmCallBack{
+        void onSuccess(QrConfirmResponse response);
         void onError(String msg);
     }
 

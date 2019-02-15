@@ -1,15 +1,31 @@
 package kz.uib.greencard.ui.main;
 
+import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.constraint.ConstraintLayout;
+import android.support.v4.app.FragmentTransaction;
+import android.support.v4.view.PagerAdapter;
+import android.support.v4.view.ViewPager;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.util.Log;
+import android.util.TypedValue;
+import android.view.Gravity;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.Button;
+import android.widget.RelativeLayout;
+import android.widget.Spinner;
 
-import com.tmall.ultraviewpager.UltraViewPager;
+import com.asksira.loopingviewpager.LoopingViewPager;
+import com.rd.PageIndicatorView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -24,46 +40,43 @@ import kz.uib.greencard.base.EmptyRecyclerView;
 import kz.uib.greencard.repository.DataManager;
 import kz.uib.greencard.repository.model.Category;
 import kz.uib.greencard.repository.model.Combo;
+import kz.uib.greencard.ui.OnFragmentInteractionListener;
+import kz.uib.greencard.ui.combo.ComboFragment;
 import kz.uib.greencard.ui.companies.CompanyListActivity;
+import kz.uib.greencard.ui.menu.MenuActivity;
 import kz.uib.greencard.ui.splash.SplashActivity;
 
-public class MainFragment extends BaseFragment implements MainMvpContract.MainMvpView, BaseAdapter.OnItemClickListener {
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
+public class MainFragment extends BaseFragment implements MainMvpContract.MainMvpView, BaseAdapter.OnItemClickListener, UltraPagerAdapter.ComboClickListener {
+
     private static final String CATEGORY_ID = "category_id";
     private static final String TITLE_CAT = "titleCat";
     private static final String ARG_PARAM2 = "param2";
     private static final String TAG = "MainFragment";
 
 
-    // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
 
+    private OnFragmentInteractionListener mListener;
+
     private MainPresenter presenter;
     private CategoryAdapter adapter;
+    private UltraPagerAdapter pagerAdapter;
 
-    @BindView(R.id.ultra_viewpager)
-    UltraViewPager viewPager;
+    @BindView(R.id.viewpager)
+    LoopingViewPager viewPager;
 
     @BindView(R.id.categoriesRecyclerView)
     EmptyRecyclerView mRecyclerView;
 
+    @BindView(R.id.indicator)
+    PageIndicatorView indicatorView;
 
-    // TODO: Rename and change types and number of parameters
     public static MainFragment newInstance() {
         MainFragment fragment = new MainFragment();
         Bundle args = new Bundle();
         fragment.setArguments(args);
         return fragment;
-    }
-
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            mParam2 = getArguments().getString(ARG_PARAM2);
-        }
     }
 
     @Override
@@ -78,31 +91,27 @@ public class MainFragment extends BaseFragment implements MainMvpContract.MainMv
         adapter = new CategoryAdapter(new ArrayList(), getBaseActivity());
         adapter.attachToRecyclerView(mRecyclerView);
         adapter.setOnItemClickListener(this);
-        //adapter.changeDataSet(bbcTaskArrays);
+        initUltraViewPager();
 
-        /*viewPager.setScrollMode(UltraViewPager.ScrollMode.HORIZONTAL);
-//initialize UltraPagerAdapter，and add child view to UltraViewPager
-        PagerAdapter adapter = new UltraPagerAdapter(false);
-        viewPager.setAdapter(adapter);
+    }
 
-//initialize built-in indicator
-        viewPager.initIndicator();
-//set style of indicators
-        viewPager.getIndicator()
-                .setOrientation(UltraViewPager.Orientation.HORIZONTAL)
-                .setFocusColor(Color.GREEN)
-                .setNormalColor(Color.WHITE)
-                .setRadius((int)TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 5, getResources().getDisplayMetrics()));
-//set the alignment
-        viewPager.getIndicator().setGravity(Gravity.CENTER_HORIZONTAL | Gravity.BOTTOM);
-//construct built-in indicator, and add it to  UltraViewPager
-        viewPager.getIndicator().build();
+    @Override
+    protected int getContentResource() {
+        return R.layout.fragment_main;
+    }
 
-//set an infinite loop
-        viewPager.setInfiniteLoop(true);
-//enable auto-scroll mode
-        viewPager.setAutoScroll(2000);*/
-
+    private void initUltraViewPager(){
+        pagerAdapter = new UltraPagerAdapter(getBaseActivity(), this);
+        viewPager.setAdapter(pagerAdapter);
+        viewPager.setIndicatorPageChangeListener(new LoopingViewPager.IndicatorPageChangeListener() {
+            @Override
+            public void onIndicatorProgress(int selectingPosition, float progress) {
+            }
+            @Override
+            public void onIndicatorPageChange(int newIndicatorPosition) {
+                indicatorView.setSelection(newIndicatorPosition);
+            }
+        });
     }
 
     @Override
@@ -115,8 +124,8 @@ public class MainFragment extends BaseFragment implements MainMvpContract.MainMv
     }
 
     @Override
-    protected int getContentResource() {
-        return R.layout.fragment_main;
+    public void onComboPageClicked(Combo combo) {
+        onButtonPressed(combo.getId());
     }
 
     @Override
@@ -126,7 +135,15 @@ public class MainFragment extends BaseFragment implements MainMvpContract.MainMv
 
     @Override
     public void updateCombosUI(List<Combo> combos) {
-        Log.e(TAG, "updateCombosUI: "+combos );
+        pagerAdapter.setItemList(combos);
+        viewPager.reset();
+        indicatorView.setCount(viewPager.getIndicatorCount());
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        viewPager.resumeAutoScroll();
     }
 
     @Override
@@ -137,10 +154,45 @@ public class MainFragment extends BaseFragment implements MainMvpContract.MainMv
     }
 
     @Override
+    public void setEmptyRView() {
+        mRecyclerView.setEmptyView(null);
+
+    }
+
+    @Override
     public void openSplashActivity() {
         Intent intent = SplashActivity.getStartIntent(getBaseActivity());
         startActivity(intent);
         getBaseActivity().finish();
+    }
+
+    @Override
+    public void onPause() {
+        viewPager.pauseAutoScroll();
+        super.onPause();
+    }
+
+    public void onButtonPressed(String id) {
+        if (mListener != null) {
+            mListener.onFragmentInteraction(id);
+        }
+    }
+
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        if (context instanceof OnFragmentInteractionListener) {
+            mListener = (OnFragmentInteractionListener) context;
+        } else {
+            throw new RuntimeException(context.toString()
+                    + " must implement OnFragmentInteractionListener");
+        }
+    }
+
+    @Override
+    public void onDetach() {
+        super.onDetach();
+        mListener = null;
     }
 
     @Override

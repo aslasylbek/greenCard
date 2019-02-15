@@ -29,9 +29,10 @@ public class ProfilePresenter<V extends ProfileMvpContract.ProfileMvpView> exten
                     getMvpView().showSnackbar(response.getMessage());
                 }
                 else {
-
-                    getMvpView().updateUI(response);
+                    if (isAttached())
+                        getMvpView().updateUI(response);
                 }
+                if (isAttached())
                 getMvpView().hideLoading();
             }
 

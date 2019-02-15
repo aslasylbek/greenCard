@@ -10,6 +10,10 @@ import kz.uib.greencard.repository.model.HistoryResponse;
 import kz.uib.greencard.repository.model.LoginResponse;
 import kz.uib.greencard.repository.model.PostResponse;
 import kz.uib.greencard.repository.model.ProfileResponse;
+import kz.uib.greencard.repository.model.PurchaseComboResponse;
+import kz.uib.greencard.repository.model.QrConfirmResponse;
+import kz.uib.greencard.repository.model.QrDiscountResponse;
+import kz.uib.greencard.repository.model.QrResponse;
 import retrofit2.Call;
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
@@ -26,11 +30,6 @@ public interface ApiService {
     @POST("green_card/login.php")
     Call<LoginResponse> userAuthentication(@Field("phone") String phone, @Field("password") String password);
 
-
-
-    @FormUrlEncoded
-    @POST("green_card/category.php")
-    Call<Void> getCategory(@Field("username") String username, @Field("password") String password);
 
     @FormUrlEncoded
     @POST("green_card/user.php")
@@ -96,38 +95,29 @@ public interface ApiService {
 
     @FormUrlEncoded
     @POST("green_card/checkout.php")
-    Call<ComboResponse> getQrInformation(@Field("session_id") String session_id, @Field("qr_code") String code, @Field("get_info") String cnt);
+    Call<QrResponse> getQrInformation(@Field("session_id") String session_id, @Field("qr_code") String code, @Field("get_info") String cnt);
 
     @FormUrlEncoded
     @POST("green_card/checkout.php")
-    Call<ComboResponse> getQrDiscount(@Field("session_id") String session_id, @Field("qr_code") String code, @Field("get_discount") String cnt, @Field("amount") int amount);
+    Call<QrDiscountResponse> getQrDiscount(@Field("session_id") String session_id, @Field("qr_code") String code, @Field("get_discount") String cnt, @Field("amount") int amount);
 
     @FormUrlEncoded
     @POST("green_card/checkout.php")
-    Call<ComboResponse> confirmDiscount(@Field("session_id") String session_id, @Field("history_id") String id, @Field("confirm") String cnt);
+    Call<QrConfirmResponse> confirmDiscount(@Field("session_id") String session_id, @Field("history_id") String id, @Field("confirm") String cnt, @Field("xonlinecode") String code);
 
 
     @FormUrlEncoded
     @POST("green_card/combo.php")
     Call<ComboResponse> getComboById(@Field("session_id") String session_id, @Field("combo_id") String id);
 
+    @FormUrlEncoded
+    @POST("green_card/checkout_combo.php")
+    Call<PurchaseComboResponse> purchaseCombo(@Field("session_id") String session_id, @Field("combo_id") String id, @Field("xonlinecode") String xonlinecode);
 
 
-
-
-
-
-/*
-
-
-        "category" : "http://de.uib.kz/green_card/category.php",
-        "checkout" : "http://de.uib.kz/green_card/checkout.php",
-        "combo" : "http://de.uib.kz/green_card/combo.php"
-    ]
-
-
-
-*/
+    @FormUrlEncoded
+    @POST("green_card/checkout_combo.php")
+    Call<PurchaseComboResponse> confirmCombo(@Field("session_id") String session_id, @Field("activity_combo_item_id") String id, @Field("confirm") String confirm);
 
 
 
